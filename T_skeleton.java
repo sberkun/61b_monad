@@ -36,19 +36,17 @@ class CheeseList<T> implements Monad<CheeseList<T>, T> {
 
 public class Main{
     public static void main(String[] args) {
-        /* RepeatN is a Function that takes in an integer N, and
-        *  returns an IntArray of N repeated N times. */
-        class RepeatN implements Function<Integer, CheeseList<Integer>> {
-            public CheeseList<Integer> apply(Integer N) {
-                ArrayList<Integer> ar = new ArrayList<>();
-                for (int i = 0; i < N; i++) {
-                    ar.add(N);
-                }
-                return new CheeseList<>(ar);
+        /* repeatN is a function that returns a list of N repeated N times. */
+        Function<Integer, CheeseList<Integer>> repeatN = N -> {
+            ArrayList<Integer> ar = new ArrayList<>();
+            for (int i = 0; i < N; i++) {
+                ar.add(N);
             }
-        }
+            return new CheeseList<>(ar);
+        };
         CheeseList<Integer> cheese = new CheeseList<>(new ArrayList<>(Arrays.asList(3,1,4)));
-        ArrayList<Integer> result = cheese.bind(new RepeatN()).ar;
+        ArrayList<Integer> result = cheese.bind(repeatN).ar;
         // expected result: [3,3,3,1,4,4,4,4]
     }
 }
+

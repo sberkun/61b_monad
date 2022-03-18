@@ -36,19 +36,17 @@ class IntArrayList implements Monad<IntArrayList, Integer> {
 
 public class Main{
     public static void main(String[] args) {
-        /* RepeatN is a Function that takes in an integer N, and
-        *  returns an IntArray of N repeated N times. */
-        class RepeatN implements Function<Integer, IntArrayList> {
-            public IntArrayList apply(Integer N) {
-                ArrayList<Integer> ar = new ArrayList<>();
-                for (int i = 0; i < N; i++) {
-                    ar.add(N);
-                }
-                return new IntArrayList(ar);
+        /* repeatN is a function that returns a list of N repeated N times. */
+        Function<Integer, CheeseList<Integer>> repeatN = N -> {
+            ArrayList<Integer> ar = new ArrayList<>();
+            for (int i = 0; i < N; i++) {
+                ar.add(N);
             }
-        }
-        IntArrayList cheese = new IntArrayList(new ArrayList<>(Arrays.asList(3,1,4)));
-        ArrayList<Integer> result = cheese.bind(new RepeatN()).ar;
+            return new CheeseList<>(ar);
+        };
+        CheeseList<Integer> cheese = new CheeseList<>(new ArrayList<>(Arrays.asList(3,1,4)));
+        ArrayList<Integer> result = cheese.bind(repeatN).ar;
         // expected result: [3,3,3,1,4,4,4,4]
     }
 }
+
